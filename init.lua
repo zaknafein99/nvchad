@@ -11,5 +11,9 @@ keymap("n", "<leader>ti", ":!terraform init<CR>", opts)
 keymap("n", "<leader>tv", ":!terraform validate<CR>", opts)
 keymap("n", "<leader>tp", ":!terraform plan<CR>", opts)
 keymap("n", "<leader>taa", ":!terraform apply -auto-approve<CR>", opts)
+
 require'lspconfig'.terraformls.setup{}
 require'lspconfig'.tflint.setup{}
+require'lspconfig'.jdtls.setup{}
+
+
