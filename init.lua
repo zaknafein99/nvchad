@@ -1,24 +1,15 @@
-return {
-  ["kdheepak/lazygit.nvim"] = {},
+vim.cmd([[silent! autocmd! filetypedetect BufRead,BufNewFile *.tf]])
+vim.cmd([[autocmd BufRead,BufNewFile *.hcl set filetype=hcl]])
+vim.cmd([[autocmd BufRead,BufNewFile .terraformrc,terraform.rc set filetype=hcl]])
+vim.cmd([[autocmd BufRead,BufNewFile *.tf,*.tfvars set filetype=terraform]])
+vim.cmd([[autocmd BufRead,BufNewFile *.tfstate,*.tfstate.backup set filetype=json]])
 
-  ["goolord/alpha-nvim"] = {
-    after = "base46",
-    disable = false,
-    config = function()
-      require "plugins.configs.alpha"
-    end,
-  },
+vim.cmd([[let g:terraform_fmt_on_save=1]])
+vim.cmd([[let g:terraform_align=1]])
 
-  -- Only load whichkey after all the gui
-  ["folke/which-key.nvim"] = {
-    disable = false,
-    module = "which-key",
-    keys = { "<leader>", '"', "'", "`" },
-    config = function()
-      require "plugins.configs.whichkey"
-    end,
-    setup = function()
-      require("core.utils").load_mappings "whichkey"
-    end,
-  },
-}
+keymap("n", "<leader>ti", ":!terraform init<CR>", opts)
+keymap("n", "<leader>tv", ":!terraform validate<CR>", opts)
+keymap("n", "<leader>tp", ":!terraform plan<CR>", opts)
+keymap("n", "<leader>taa", ":!terraform apply -auto-approve<CR>", opts)
+require'lspconfig'.terraformls.setup{}
+require'lspconfig'.tflint.setup{}
